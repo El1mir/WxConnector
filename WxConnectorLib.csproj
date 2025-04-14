@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0-windows</TargetFramework>
+        <LangVersion>12</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <PackageId>WxConnectorLib</PackageId>
+        <Version>0.0.1</Version>
+        <Title>WxConnector</Title>
+        <Authors>El1mir</Authors>
+        <Description>一个基于UIA3，的微信连接件库</Description>
+        <Copyright>Dev By El1mir</Copyright>
+        <Company>莱莫科技（云南）有限公司</Company>
+        <Product>WxConnectorLib</Product>
+        <AssemblyName>WxConnectorLib</AssemblyName>
+        <RootNamespace>WxConnectorLib</RootNamespace>
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FlaUI.UIA3" Version="5.0.0"/>
+        <PackageReference Include="Microsoft.Windows.Compatibility" Version="9.0.4"/>
+    </ItemGroup>
+
+</Project>
