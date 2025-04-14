@@ -6,7 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <PackageId>WxConnectorLib</PackageId>
-        <Version>0.0.1</Version>
+        <Version>0.1.0</Version>
         <Title>WxConnector</Title>
         <Authors>El1mir</Authors>
         <Description>一个基于UIA3，的微信连接件库</Description>
@@ -15,7 +15,17 @@
         <Product>WxConnectorLib</Product>
         <AssemblyName>WxConnectorLib</AssemblyName>
         <RootNamespace>WxConnectorLib</RootNamespace>
-        <OutputType>Exe</OutputType>
+        <PackageProjectUrl>https://github.com/El1mir/WxConnector.git</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/El1mir/WxConnector/blob/dev/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/El1mir/WxConnector.git</RepositoryUrl>
+        <RepositoryType>public opensource</RepositoryType>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <AssemblyVersion>0.1.0</AssemblyVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+      <PlatformTarget>x64</PlatformTarget>
     </PropertyGroup>
 
     <ItemGroup>
