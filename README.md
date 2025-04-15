@@ -14,6 +14,17 @@ WeChat 3.9.12 安装包 https://www.123912.com/s/trNHjv-Hi9GA
 .Net 8.0.15 Runtime-win-x64 https://www.123912.com/s/trNHjv-Ai9GA
 
 ## 快速开始
+
+
+先在项目中添加对 WxConnectorLib 的引用
+
+```bash
+    NuGet\Install-Package WxConnectorLib 
+```
+
+或在Nuget包管理器中搜索 WxConnectorLib 进行安装
+
+
 ```csharp
 // 引入需要的命名空间
 using WxConnectorLib.Managers;
