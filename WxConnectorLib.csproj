@@ -7,9 +7,9 @@
         <Nullable>enable</Nullable>
         <PackageId>WxConnectorLib</PackageId>
         <Version>0.1.0</Version>
-        <Title>WxConnector</Title>
+        <Title>WxConnectorLib</Title>
         <Authors>El1mir</Authors>
-        <Description>一个基于UIA3，的微信连接件库</Description>
+        <Description>一个高速的类似wxauto的基于UIA3进行开发的的微信操作模拟库</Description>
         <Copyright>Dev By El1mir</Copyright>
         <Company>莱莫科技（云南）有限公司</Company>
         <Product>WxConnectorLib</Product>
