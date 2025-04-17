@@ -6,7 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <PackageId>WxConnectorLib</PackageId>
-        <Version>0.1.0</Version>
+        <Version>0.1.1</Version>
         <Title>WxConnectorLib</Title>
         <Authors>El1mir</Authors>
         <Description>一个高速的类似wxauto的基于UIA3进行开发的的微信操作模拟库</Description>
@@ -20,12 +20,14 @@
         <RepositoryUrl>https://github.com/El1mir/WxConnector.git</RepositoryUrl>
         <RepositoryType>public opensource</RepositoryType>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-        <AssemblyVersion>0.1.0</AssemblyVersion>
+        <AssemblyVersion>0.1.1</AssemblyVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageReleaseNotes>增加了At和引用消息的功能、增加了初始化监听窗口的容错，并修复了监听时不能打字的问题</PackageReleaseNotes>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
       <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-      <PlatformTarget>x64</PlatformTarget>
+      <PlatformTarget>AnyCPU</PlatformTarget>
     </PropertyGroup>
 
     <ItemGroup>
