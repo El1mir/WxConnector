@@ -19,7 +19,7 @@ WeChat 3.9.12 安装包 https://www.123912.com/s/trNHjv-Hi9GA
 先在项目中添加对 WxConnectorLib 的引用
 
 ```bash
-    NuGet\Install-Package WxConnectorLib 
+NuGet\Install-Package WxConnectorLib 
 ```
 
 或在Nuget包管理器中搜索 WxConnectorLib 进行安装
@@ -55,4 +55,4 @@ ActionUtil.Get().SendTextMessage("这是一条测试文字消息", window);
 ```
 
 ## 文档
-文档在路上了，当前请各位先参考代码中的注释
+[GitBook | WxConnector](https://el1mirs-organization.gitbook.io/wxconnector)
