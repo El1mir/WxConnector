@@ -65,7 +65,7 @@ public class ListenManager
                             TimeSpan.MaxValue
                         );
 
-                        item.Focus();
+                        item.SetForeground();
                         Thread.Sleep(200);
                         // 获取新消息
                         var msgs = ElementUtil.Get().GetAllElementsFromGiveWindow(item, XPath.MsgItems);

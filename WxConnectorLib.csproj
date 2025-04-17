@@ -6,7 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <PackageId>WxConnectorLib</PackageId>
-        <Version>0.0.1</Version>
+        <Version>0.1.0</Version>
         <Title>WxConnector</Title>
         <Authors>El1mir</Authors>
         <Description>一个基于UIA3，的微信连接件库</Description>
@@ -16,6 +16,7 @@
         <AssemblyName>WxConnectorLib</AssemblyName>
         <RootNamespace>WxConnectorLib</RootNamespace>
         <OutputType>Exe</OutputType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>

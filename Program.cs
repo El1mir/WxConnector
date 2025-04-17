@@ -17,7 +17,7 @@ public static class WxConnector
         ElementUtil.Get().RefreshWxMainWindow();*/
         ActionUtil.Get().LoginAction(@"C:\Program Files\Tencent\WeChat\WeChat.exe");
         // 搜索用户并点击
-        var listener = ActionUtil.Get().OpenListenerWindowsAction(["小米", "测试机器人群聊"]);
+        var listener = ActionUtil.Get().OpenListenerWindowsAction(["群聊测试", "测试机器人群聊"]);
         /*var searchBox = ElementUtil.Get().GetFirstElementFromMainWindow(XPath.SearchBox);
         searchBox?.Click();
         Keyboard.Type("文件传输助手");
@@ -59,7 +59,7 @@ public static class WxConnector
         */
         // 测试监听消息
         //这里监听可用
-        MessageUtil.Get().SetSavePath();
+        /*MessageUtil.Get().SetSavePath();
         var listenManager = ListenManager.Get();
         listenManager.InitListen(listener);
         EventManager.Get().OnNewMessage += (message, chatWindow) => Console.WriteLine($"从{chatWindow.Title}收到消息：{message}");
@@ -72,7 +72,7 @@ public static class WxConnector
                 ActionUtil.Get().SendTextMessage("下面是一条测试图片消息", window);
                 ActionUtil.Get().SendFileMessage(@"C:\Users\Administrator\Pictures\1.jpg", window);
             }
-        };
+        };*/
         /*
         发送消息可用
         ActionUtil.Get().SendTextMessage("这是一条测试消息", listener.First(x => x.Title == "文件传输助手"));
@@ -81,7 +81,7 @@ public static class WxConnector
             @"C:\Users\Administrator\Pictures\1.jpg",
             listener.First(x => x.Title == "文件传输助手")
             );*/
-        Thread.Sleep(TimeSpan.FromMinutes(10));
+        /*Thread.Sleep(TimeSpan.FromMinutes(10));*/
         // 测试保存文件
         /*
         测试保存文件可用
@@ -98,5 +98,21 @@ public static class WxConnector
          * 测试转发消息处理可用
          * ActionUtil.Get().OpenMergeForwardAction(msg);
          */
+        var window = listener.First(x => x.Title == "群聊测试");
+        var msg = ElementUtil.Get().GetAllElementsFromGiveWindow(
+            window, XPath.MsgItems
+        );
+        ActionUtil.Get().QuoteMessage(
+            msg.Last(x => x.Name == "没开"),
+            window,
+            true
+        );
+        // 通过名字 at 可用 ActionUtil.Get().AtByNameInGroup("小米", window);
+        /*
+        通过头像 at 可用
+        var user = ActionUtil.Get().SearchUserAvatarByName(window, "小米");
+        ActionUtil.Get().At(user, window);
+        ActionUtil.Get().SendTextMessage("爱你宝宝", window);
+        */
     }
 }

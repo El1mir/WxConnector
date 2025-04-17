@@ -226,6 +226,11 @@ public static class XPath
     public const string UserListFirstItem = "/Pane[2]/Pane/Pane[1]/Pane[2]/Pane/Pane/Pane/List/ListItem[1]";
 
     /// <summary>
+    ///     用户区的用户列表的Item（查找全部）
+    /// </summary>
+    public const string UserListItem = "/Pane[2]/Pane/Pane[1]/Pane[2]/Pane/Pane/Pane/List/ListItem";
+
+    /// <summary>
     ///     右键点击用户Item后(对应UserListFirstItem)，右键菜单的所有菜单项（估计是所有的右键菜单项都可以在这里拿到）
     ///     确定了猜测，每个窗口的右键菜单的所有菜单项都可以用这个拿到
     /// </summary>
@@ -416,6 +421,14 @@ public static class XPath
     ///     基于发送文件浮窗获取发送按钮
     /// </summary>
     public const string SendButtonBaseOnFileSendCard = "/Window/Pane[2]/Pane[5]/Button[1]";
+    /// <summary>
+    ///     基于聊天窗口查找at列表浮窗
+    /// </summary>
+    public const string AsListBaseOnChatWindow = "/Pane[1]";
+    /// <summary>
+    ///     基于聊天窗口查找at列表成员（输入at后的浮窗内的成员）
+    /// </summary>
+    public const string AtListItemBaseOnChatWindow = "/Pane[1]/Pane[2]/List/ListItem";
 }
 
 /*
