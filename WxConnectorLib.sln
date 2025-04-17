@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WxConnector", "WxConnector.csproj", "{F428C80E-436D-4538-ADCC-BFA20831D5C1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WxConnectorLib", "WxConnectorLib.csproj", "{81E3336B-3E89-4857-8794-015EA725CB66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +8,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F428C80E-436D-4538-ADCC-BFA20831D5C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F428C80E-436D-4538-ADCC-BFA20831D5C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F428C80E-436D-4538-ADCC-BFA20831D5C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F428C80E-436D-4538-ADCC-BFA20831D5C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81E3336B-3E89-4857-8794-015EA725CB66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81E3336B-3E89-4857-8794-015EA725CB66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81E3336B-3E89-4857-8794-015EA725CB66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81E3336B-3E89-4857-8794-015EA725CB66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

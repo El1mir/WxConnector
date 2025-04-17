@@ -309,7 +309,9 @@ public class ActionUtil
                 TimeSpan.FromSeconds(1)
             );
             // 双击刚刚点击的搜索对象，打开到独立窗口
-            _util.GetFirstElementFromMainWindow(XPath.UserListFirstItem)?.DoubleClick();
+            _util.GetAllElementsFromMainWindow(XPath.UserListItem)
+                .First(x => x.Name == item)
+                .DoubleClick();
             listenWindows.Add(_util.GetUserChatWindow(item)!);
         }
         return listenWindows;
@@ -440,6 +442,150 @@ public class ActionUtil
         sendButton!.Click();
 
         // 恢复监听
+        ListenManager.Get().ResumeListen();
+    }
+
+    /// <summary>
+    /// 用于滚动查找
+    /// </summary>
+    /// <param name="element">需要滚动的对象</param>
+    /// <param name="action">查找等待方法，使用方法同WaitUntil</param>
+    /// <param name="waitOnce">单次查找后等待时间</param>
+    /// <param name="timeout">查找超时</param>
+    /// <param name="isUp">是否向上滚动</param>
+    /// <param name="lines">每次滚动的行数</param>
+    /// <typeparam name="T">查找返回对象</typeparam>
+    private T ScrollSearch<T>(AutomationElement element, Func<(bool, T)> action, TimeSpan waitOnce, TimeSpan timeout, bool isUp, double lines)
+    {
+        return WaitUtil.WaitUntil(() =>
+            {
+                element.SetForeground();
+                Mouse.MovePixelsPerMillisecond = 100;
+                Mouse.MoveTo(element.GetClickablePoint());
+                Mouse.Scroll(isUp ? lines : -lines);
+                return action();
+            },
+            waitOnce,
+            timeout
+        );
+    }
+
+    /// <summary>
+    /// 基于 用户备注名 查询 用户头像按钮对象
+    /// </summary>
+    /// <param name="chatWindow">聊天窗口</param>
+    /// <param name="name">用户备注名</param>
+    /// <returns>用户头像按钮对象</returns>
+    public AutomationElement SearchUserAvatarByName(Window chatWindow, string name)
+    {
+        ListenManager.Get().PauseListen();
+        chatWindow.SetForeground();
+        var res = ScrollSearch(
+            chatWindow,
+            () =>
+            {
+                var msgs = _util.GetAllElementsFromGiveWindow(
+                    chatWindow,
+                    XPath.MsgItems
+                ).Select(x => _util.GetFirstElementFromGiveItem(
+                    x, XPath.UserWindowUserAvatarButtonBaseOnMsgItem
+                )).ToList();
+                var res = msgs.LastOrDefault(x => x?.Name == name && x.Properties.IsOffscreen == false);
+                return res == null ? (false, null) : (true, res);
+            },
+            TimeSpan.FromMilliseconds(150),
+            TimeSpan.FromSeconds(15),
+            true,
+            3
+        );
+        ListenManager.Get().ResumeListen();
+        return res!;
+    }
+
+    /// <summary>
+    /// 基于头像按钮进行at
+    /// </summary>
+    /// <param name="avatarButton">头像按钮</param>
+    /// <param name="chatWindow">用于 at 的窗口</param>
+    public void At(AutomationElement avatarButton, Window chatWindow)
+    {
+        ListenManager.Get().PauseListen();
+        chatWindow.SetForeground();
+        avatarButton.RightClick();
+        var res = _util.GetAllElementsFromGiveWindow(
+            chatWindow,
+            XPath.RightClickMenuItems
+        ).FirstOrDefault(x => x.Name.Contains($"@{avatarButton.Name}") );
+        res?.Click();
+        ListenManager.Get().ResumeListen();
+    }
+
+    /// <summary>
+    /// 用于在群中基于备注名 at 别人
+    /// </summary>
+    /// <param name="userName">要at的群员的备注名</param>
+    /// <param name="chatWindow">群聊天独立窗口</param>
+    public void AtByNameInGroup(string userName, Window chatWindow)
+    {
+        ListenManager.Get().PauseListen();
+        chatWindow.SetForeground();
+        // 获取消息 Edit -> 输入 @备注名 -> 点击at对象
+        var msgEdit = _util.GetFirstElementFromGiveWindow(
+            chatWindow, XPath.MsgEditBaseOnChatWindow
+        );
+        msgEdit?.Click();
+        Keyboard.Type($"@{userName}");
+        var atButton = WaitUtil.WaitUntil(() =>
+            {
+                var res = _util.GetAllElementsFromGiveWindow(
+                    chatWindow, XPath.AtListItemBaseOnChatWindow
+                ).FirstOrDefault();
+                return res == null ? (false, null) : (true, res);
+            },
+            TimeSpan.FromMilliseconds(100),
+            TimeSpan.FromSeconds(2)
+        );
+        atButton?.Click();
+        ListenManager.Get().ResumeListen();
+    }
+
+    /// <summary>
+    /// 用于在聊天中引用消息
+    /// 支持引用后 at（at被引用消息的发送者，这个操作需要在群内进行）
+    /// </summary>
+    /// <param name="msg">需要引用的消息</param>
+    /// <param name="chatWindow">聊天窗口</param>
+    /// <param name="isAt">需要引用后at吗</param>
+    public void QuoteMessage(AutomationElement msg, Window chatWindow, bool isAt = false)
+    {
+        ListenManager.Get().PauseListen();
+        chatWindow.SetForeground();
+        var clickAble = _util.GetFirstElementFromGiveItem(
+            msg, XPath.ClickAbelBoxBaseOnSelfMsgItem
+        ) ?? _util.GetFirstElementFromGiveItem(
+            msg, XPath.ClickAbelBoxBaseOnOtherMsgItem
+        );
+        var avatar = _util.GetFirstElementFromGiveItem(
+            msg, XPath.UserWindowUserAvatarButtonBaseOnMsgItem
+        );
+        // 右键消息唤起菜单进行引用
+        clickAble?.RightClick();
+        var quote = WaitUtil.WaitUntil(() =>
+            {
+                var res = _util.GetAllElementsFromGiveWindow(
+                    chatWindow, XPath.RightClickMenuItems
+                ).FirstOrDefault(x => x.Name == "引用");
+                return res == null ? (false, null) : (true, res);
+            },
+            TimeSpan.FromMilliseconds(100),
+            TimeSpan.FromSeconds(2)
+        );
+        quote?.Click();
+        // 需要 at 则获取 Edit 进行 at
+        if (isAt)
+        {
+            AtByNameInGroup(avatar!.Name, chatWindow);
+        }
         ListenManager.Get().ResumeListen();
     }
 }
