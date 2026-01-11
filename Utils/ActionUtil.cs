@@ -9,7 +9,7 @@ namespace WxConnectorLib.Utils;
 /// <summary>
 ///     操作工具类（单例）
 /// </summary>
-public class ActionUtil
+public partial class ActionUtil
 {
     private static ActionUtil? _instance;
     private static readonly object Lock = new();
@@ -63,7 +63,7 @@ public class ActionUtil
                 var res = _util.GetAllElementsFromGiveWindow(
                     chatWindow,
                     XPath.RightClickMenuItems
-                ).FirstOrDefault(x => x.Name.Contains("另存为") );
+                ).FirstOrDefault(x => x.Name.Contains("另存为"));
                 if (res == null)
                 {
                     // 没有找到则再次右键关闭右键菜单
@@ -73,7 +73,7 @@ public class ActionUtil
                     Mouse.MovePixelsPerMillisecond = 100;
                     Mouse.MoveTo(new Point(Mouse.Position.X + 200, Mouse.Position.Y));
                     Mouse.Click();
-                    return (false, null);
+                    return (false, null!);
                 }
                 return (true, res);
             },
@@ -225,7 +225,7 @@ public class ActionUtil
             if (content == null)
             {
                 // 则不是文本
-                var match = Regex.Match(msg.Name, @"\[(.*?)\]");
+                var match = MergeForwardRegex().Match(msg.Name);
                 if (!match.Success) continue;
                 var contentName = match.Value;
                 res.Add(
@@ -241,7 +241,10 @@ public class ActionUtil
         }
 
         // 关闭窗口
-        _util.GetFirstElementFromGiveWindow(mergeForwardWindow, XPath.CloseButtonBaseOnMergeForwardWindow)?.Click();
+        if (mergeForwardWindow != null)
+        {
+            _util.GetFirstElementFromGiveWindow(mergeForwardWindow, XPath.CloseButtonBaseOnMergeForwardWindow)?.Click();
+        }
         return res;
     }
 
@@ -455,7 +458,7 @@ public class ActionUtil
     /// <param name="isUp">是否向上滚动</param>
     /// <param name="lines">每次滚动的行数</param>
     /// <typeparam name="T">查找返回对象</typeparam>
-    private T ScrollSearch<T>(AutomationElement element, Func<(bool, T)> action, TimeSpan waitOnce, TimeSpan timeout, bool isUp, double lines)
+    private static T ScrollSearch<T>(AutomationElement element, Func<(bool, T)> action, TimeSpan waitOnce, TimeSpan timeout, bool isUp, double lines)
     {
         return WaitUtil.WaitUntil(() =>
             {
@@ -515,7 +518,7 @@ public class ActionUtil
         var res = _util.GetAllElementsFromGiveWindow(
             chatWindow,
             XPath.RightClickMenuItems
-        ).FirstOrDefault(x => x.Name.Contains($"@{avatarButton.Name}") );
+        ).FirstOrDefault(x => x.Name.Contains($"@{avatarButton.Name}"));
         res?.Click();
         ListenManager.Get().ResumeListen();
     }
@@ -588,4 +591,7 @@ public class ActionUtil
         }
         ListenManager.Get().ResumeListen();
     }
+
+    [GeneratedRegex(@"\[(.*?)\]")]
+    private static partial Regex MergeForwardRegex();
 }
